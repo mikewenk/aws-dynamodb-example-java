@@ -1,0 +1,16 @@
+.class
+*.ear
+*.iml
+*.iws
+*.jar
+*.war
+.classpath
+.idea/
+.project
+.settings/
+Desktop.ini
+Thumbs.db
+bin/
+dependency-reduced-pom.xml
+target/
+.factorypath
