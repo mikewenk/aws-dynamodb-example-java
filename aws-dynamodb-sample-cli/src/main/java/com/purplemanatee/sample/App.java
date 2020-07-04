@@ -8,6 +8,8 @@ import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.Options;
 
+import static com.purplemanatee.sample.utils.AssertUtils.notNull;
+
 /**
  * Hello world!
  *
@@ -25,6 +27,7 @@ public class App
 
         String cmdStr = cli.getOptionValue("cmd");
 
+        notNull(cmdStr, "You must include a cmd argument");
         DataHolder data = getDataFromCommandLine(cli);
         Command cmdToExecute;
         switch (cmdStr) {
