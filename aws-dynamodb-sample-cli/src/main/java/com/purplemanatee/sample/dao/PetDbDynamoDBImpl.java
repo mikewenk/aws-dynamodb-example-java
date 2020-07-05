@@ -43,7 +43,7 @@ public class PetDbDynamoDBImpl {
     public List<Pet> readPetByStatus(StatusEnum status) {
         Map<String, AttributeValue> eav = new HashMap<String, AttributeValue>();
         eav.put(":status", new AttributeValue().withS(status.name()));
-        DynamoDBScanExpression scanExpression = new DynamoDBScanExpression().withFilterExpression("Status = :status").withIndexName("Status-Name-index").withExpressionAttributeValues(eav);
+        DynamoDBScanExpression scanExpression = new DynamoDBScanExpression().withFilterExpression("adoptionStatus = :status").withIndexName("adoptionStatus-index").withExpressionAttributeValues(eav);
         return mapper.scan(Pet.class, scanExpression);
     }
 }

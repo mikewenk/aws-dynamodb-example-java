@@ -4,12 +4,17 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.purplemanatee.sample.dao.PetDbDynamoDBImpl;
 import com.purplemanatee.sample.model.DataHolder;
 import com.purplemanatee.sample.model.Pet;
+import io.opentracing.Tracer;
 
 import java.io.FileReader;
 
 import static com.purplemanatee.sample.utils.AssertUtils.notNull;
 
-public class DeletePet implements Command {
+public class DeletePet extends Command {
+
+    public DeletePet(Tracer t) {
+        super(t);
+    }
 
     @Override
     public void executeCommand(DataHolder data) throws Exception {

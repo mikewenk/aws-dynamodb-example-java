@@ -3,6 +3,8 @@ package com.purplemanatee.sample;
 import com.purplemanatee.sample.cmds.*;
 import com.purplemanatee.sample.enumeration.StatusEnum;
 import com.purplemanatee.sample.model.DataHolder;
+import io.jaegertracing.Configuration;
+import io.opentracing.Tracer;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -17,6 +19,8 @@ import static com.purplemanatee.sample.utils.AssertUtils.notNull;
 public class App 
 {
     public static void main( String[] args ) throws Exception {
+        Tracer t = createTracer();
+
         Options cliOptions = new Options();
         cliOptions.addOption("c", "cmd", true, "What to do (save, getid, getstatus, update)");
         cliOptions.addOption("j", "json", true, "Json file of Object to save");
@@ -32,22 +36,27 @@ public class App
         Command cmdToExecute;
         switch (cmdStr) {
             case "save":
-                cmdToExecute = new SaveCommand();
+                cmdToExecute = new SavePet(t);
                 break;
             case "getid":
-                cmdToExecute = new GetPetById();
+                cmdToExecute = new GetPetById(t);
                 break;
             case "getstatus":
-                cmdToExecute = new GetPetListByStatus();
+                cmdToExecute = new GetPetListByStatus(t);
                 break;
             case "delete":
-                cmdToExecute = new DeletePet();
+                cmdToExecute = new DeletePet(t);
                 break;
             default:
                 throw new RuntimeException("command unknown");
 
         }
         cmdToExecute.executeCommand(getDataFromCommandLine(cli));
+    }
+
+    private static Tracer createTracer() {
+        Tracer tracer = Configuration.fromEnv("DynamoDBDemoApp").getTracer();
+        return tracer;
     }
 
     private static DataHolder getDataFromCommandLine(CommandLine cli) {

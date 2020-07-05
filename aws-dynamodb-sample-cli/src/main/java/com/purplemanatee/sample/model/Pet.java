@@ -2,32 +2,48 @@ package com.purplemanatee.sample.model;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.*;
 import com.purplemanatee.sample.enumeration.StatusEnum;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 
 @DynamoDBTable(tableName = "Pets")
 public class Pet {
-    private Integer Id;
-    private LocalDate adoptedDate;
+    private Long id;
     private String name;
     private String description;
-    private StatusEnum status;
+    private String species;
+    private String breed;
+    private String adoptionStatus;
 
-    @DynamoDBRangeKey(attributeName = "AdopedDate")
-
-    public LocalDate getAdoptedDate() {
-        return adoptedDate;
+    @DynamoDBAttribute(attributeName="adoptionStatus")
+    public String getAdoptionStatus() {
+        return adoptionStatus;
     }
 
-    public void setAdoptedDate(LocalDate adoptedDate) {
-        this.adoptedDate = adoptedDate;
+    public void setAdoptionStatus(String adoptionStatus) {
+        this.adoptionStatus = adoptionStatus;
     }
 
-    @DynamoDBAttribute(attributeName="Name")
+
+    @DynamoDBAttribute(attributeName="species")
+    public String getSpecies() {
+        return species;
+    }
+
+    public void setSpecies(String species) {
+        this.species = species;
+    }
+
+
+    @DynamoDBAttribute(attributeName="breed")
+    public String getBreed() {
+        return breed;
+    }
+    public void setBreed(String breed) {
+        this.breed = breed;
+    }
+
+    @DynamoDBAttribute(attributeName="name")
     public String getName() {
         return name;
     }
@@ -36,16 +52,7 @@ public class Pet {
         this.name = name;
     }
 
-    @DynamoDBAttribute(attributeName="Status")
-    public StatusEnum getStatus() {
-        return status;
-    }
-
-    public void setStatus(StatusEnum status) {
-        this.status = status;
-    }
-
-    @DynamoDBAttribute(attributeName="Status")
+    @DynamoDBAttribute(attributeName="description")
     public String getDescription() {
         return description;
     }
@@ -53,11 +60,11 @@ public class Pet {
         this.description = description;
     }
 
-    @DynamoDBHashKey(attributeName="Id")
-    public Integer getId() {
-        return Id;
+    @DynamoDBHashKey(attributeName="id")
+    public Long getId() {
+        return id;
     }
-    public void setId(Integer Id) {
-        this.Id = Id;
+    public void setId(Long id) {
+        this.id = id;
     }
 }

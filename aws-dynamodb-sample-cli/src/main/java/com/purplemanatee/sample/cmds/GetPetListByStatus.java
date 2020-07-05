@@ -4,12 +4,17 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.purplemanatee.sample.dao.PetDbDynamoDBImpl;
 import com.purplemanatee.sample.model.DataHolder;
 import com.purplemanatee.sample.model.Pet;
+import io.opentracing.Tracer;
 
 import java.util.List;
 
 import static com.purplemanatee.sample.utils.AssertUtils.notNull;
 
-public class GetPetListByStatus implements Command {
+public class GetPetListByStatus extends Command {
+
+    public GetPetListByStatus(Tracer t) {
+        super(t);
+    }
 
     @Override
     public void executeCommand(DataHolder data) throws Exception {
@@ -24,6 +29,7 @@ public class GetPetListByStatus implements Command {
             System.out.println("Pet");
             System.out.println("-----");
             System.out.print(json);
+            System.out.println("");
         }
 
 
